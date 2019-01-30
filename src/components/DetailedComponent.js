@@ -24,7 +24,34 @@ class DishDetail extends Component {
                 <div></div>
             );		
 	}
-	
+
+	renderComments(dish) {
+		if (dish.comments != null) {
+			const comment = dish.comments.map((comment) => {
+				return (
+					<ul className="list-unstyled" key={comment.id}>
+						<li>{comment.comment}</li>
+						<li>-- {comment.author}, {comment.date}</li>
+					</ul>
+				);
+			});
+			return(
+				<div>
+					<div className="row">
+						<h4>Comments</h4>
+					</div>
+					<div className="row">
+						{comment}
+					</div>
+				</div>
+			);
+		}
+		else
+			return(
+				<div></div>
+			);
+	}
+
     render() {
         if (this.props.dish != null) {
             return(
@@ -36,6 +63,7 @@ class DishDetail extends Component {
 				</div>
 				<div className="row">
                   <div className="col-12 col-md-5 m-1">
+					{this.renderComments(this.props.dish)}
                   </div>
                 </div>
 			</div>
