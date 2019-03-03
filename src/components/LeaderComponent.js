@@ -1,6 +1,5 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { Link } from 'react-router-dom';
+
 import { Media } from 'reactstrap';
 
 function RenderLeader({leader}) {
