@@ -8,9 +8,13 @@ class CommentForm extends Component {
     
         this.state = {
           isNavOpen: false,
-          isModalOpen: false
+          isModalOpen: false,
+          rating: '',
+          author: '',
+          comment: ''
         };
-         this.toggleModal = this.toggleModal.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     toggleModal() {
@@ -19,6 +23,12 @@ class CommentForm extends Component {
         });
       }
 
+    handleSubmit(values) {
+        console.log('Current State is: ' + JSON.stringify(values));
+        alert('Current State is: ' + JSON.stringify(values));
+        // event.preventDefault();
+    }
+
     render() {
         return(
             <div>
@@ -26,24 +36,36 @@ class CommentForm extends Component {
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.handleSubmit}>
+                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                             <FormGroup>
                                 <Label htmlFor="rating">Rating</Label>
-                                <input type="number" id="rating" name="rating" size="50" min="1" max="5"
-                                    innerRef={(input) => this.rating = input} />
+                                <br />
+                                <Control.select model=".rating" id="rating" name="rating"
+                                        className="form-control">
+                                  <option value='1'>1</option>
+                                  <option value='2'>2</option>
+                                  <option value='3'>3</option>
+                                  <option value='4'>4</option>
+                                  <option value='5'>5</option>
+                                </Control.select>
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="yourname">Your Name</Label>
-                                <Input type="text" id="yourname" name="yourname"
-                                    innerRef={(input) => this.yourname = input} />
+                                <Label htmlFor="author">Your Name</Label>
+                                <Control.text model=".author" id="author" name="author"
+                                        placeholder="Your Name"
+                                        className="form-control"
+                                />
                             </FormGroup>
                             <FormGroup>
                                 <Label htmlFor="comment">Comment</Label>
-                                <Input type="textarea" id="comment" name="comment" rows="12"
-                                    innerRef={(input) => this.comment = input} />
+                                <Control.textarea model=".comment" id="comment" name="comment"
+                                        rows="6"
+                                        placeholder="Comment"
+                                        className="form-control"
+                                />
                             </FormGroup>
                             <Button type="submit" value="Submit" color="primary">Submit</Button>
-                        </Form>                    
+                        </LocalForm>                    
                     </ModalBody>
                 </Modal>
             </div>
