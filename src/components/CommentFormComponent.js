@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Control, LocalForm, Errors } from 'react-redux-form';
-import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, FormGroup, Label } from 'reactstrap';
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
 
 class CommentForm extends Component {
    constructor(props) {
@@ -14,7 +18,18 @@ class CommentForm extends Component {
           comment: ''
         };
         this.toggleModal = this.toggleModal.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+    
+        this.setState({
+          [name]: value
+        });
     }
 
     toggleModal() {
@@ -41,12 +56,12 @@ class CommentForm extends Component {
                                 <Label htmlFor="rating">Rating</Label>
                                 <br />
                                 <Control.select model=".rating" id="rating" name="rating"
-                                        className="form-control">
-                                  <option value='1'>1</option>
-                                  <option value='2'>2</option>
-                                  <option value='3'>3</option>
-                                  <option value='4'>4</option>
-                                  <option value='5'>5</option>
+                                        className="form-control" defaultValue='1'>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
                                 </Control.select>
                             </FormGroup>
                             <FormGroup>
@@ -54,7 +69,20 @@ class CommentForm extends Component {
                                 <Control.text model=".author" id="author" name="author"
                                         placeholder="Your Name"
                                         className="form-control"
+                                        validators={{
+                                            required, minLength: minLength(3), maxLength: maxLength(15)
+                                        }}
                                 />
+                                <Errors
+                                    className="text-danger"
+                                    model=".author"
+                                    show="touched"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be 15 characters or less'
+                                    }}
+                                 />
                             </FormGroup>
                             <FormGroup>
                                 <Label htmlFor="comment">Comment</Label>
