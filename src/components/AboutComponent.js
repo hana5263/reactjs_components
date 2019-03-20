@@ -3,16 +3,26 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 
 import RenderLeader from './LeaderComponent';
+import { Loading } from './LoadingComponent';
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
-            <RenderLeader leader={leader} />
+	        <RenderLeader leader={leader} />
         );
     });
-
-    return(
+    if (props.leaders.isLoading) {
+        return(
+                <Loading />
+        );
+    }
+    else if (props.leaders.errMess) {
+        return(
+                <h4>{props.leaders.errMess}</h4>
+        );
+    }
+    else return(
         <div className="container">
             <div className="row">
                 <Breadcrumb>

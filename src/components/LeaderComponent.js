@@ -1,13 +1,14 @@
 import React from 'react';
 
 import { Media } from 'reactstrap';
+import { baseUrl } from '../shared/baseUrl';
 
 function RenderLeader({leader}) {
 	if (leader != null)
 		return(
 			<Media>
 				<Media left href='#'>
-					<Media object src={leader.image} alt={leader.name} />
+					<Media object src={baseUrl + leader.image} alt={leader.name} />
 				</Media>
 				<Media body>
 					<Media heading>
