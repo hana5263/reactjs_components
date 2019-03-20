@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Row, Col, Label } from 'reactstrap';
-import { Control, Form, Errors, actions } from 'react-redux-form';
+import { Control, Form, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
 const required = (val) => val && val.length;
@@ -88,9 +88,6 @@ class Contact extends Component {
     }
 
     render() {
-
-      const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
-
       return(
         <div className="container">
             <div className="row">
